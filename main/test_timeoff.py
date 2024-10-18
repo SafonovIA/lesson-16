@@ -4,7 +4,7 @@ from pages.AuthPages import AuthPage
 from pages.TimeOffPage import TimeOff
 from random import randint
 from atf.api.json_rpc import JsonRpcClient
-from api.wrappers.time_off_api_wrapper import TimeoffApiWrapper
+from api.wrappers.timeoff_api_wrapper import TimeoffApiWrapper
 
 
 class Test(TestCaseUI):

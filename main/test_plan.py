@@ -3,7 +3,7 @@ from atf.ui import *
 from main.pages.Libraries.AuthControls.authForm import MainWithSteps
 from main.pages.plans import Plans
 from random import randint
-from api.wrappers.work_plan_api_wrapper import PlanApiWrapper
+from api.wrappers.plan_api_wrapper import PlanApiWrapper
 
 
 class Test(TestCaseUI):
@@ -28,7 +28,7 @@ class Test(TestCaseUI):
         self.plans_card = self.plans_page.create_doc('План работ')
 
     def tearDown(self):
-        self.plan_api.delete_document(self.plan_data['Сотрудник'], self.plan_data['Комментарий'])
+        self.plan_api.delete_document(self.plan_data['Сотрудник'], self.plan_data['Комментарий'].split()[0])
 
     def test_01(self):
         """Создание плана работ"""

@@ -2,7 +2,7 @@ from atf.api.base_api_ui import BaseApiUI
 from atf.api.helpers import *
 
 
-class PersonalInfo(BaseApiUI):
+class PersonProfile(BaseApiUI):
     """PersonProfile.PersonalInfo"""
 
     def personal_info(self):

@@ -11,14 +11,14 @@ class PlanApiWrapper(BaseApiUI):
         self.plan_api = WorkPlanList(client)
         self.delete_doc = DeleteDoc(client)
 
-    def delete_document(self, plan_mask, search):
+    def delete_document(self, person, couse):
         """Удаление документа
-        :param plan_mask: фильтр
-        :param search: фильтр поиска
+        :param person: Сотрудник
+        :param couse: Причина
         """
 
-        assert plan_mask, 'Параметр plan_mask не может быть пустым'
-        response = self.plan_api.list(search).result
+        assert couse, 'Параметр couse не может быть пустым'
+        response = self.plan_api.list(person).result
         for i in response:
-            if plan_mask in i['Пункты']:
+            if couse in i['Пункты']:
                 self.delete_doc.delete_doc(i['@Документ'])

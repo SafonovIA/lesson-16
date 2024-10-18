@@ -11,15 +11,15 @@ class TimeoffApiWrapper(BaseApiUI):
         self.timeoff_api = WDT(client)
         self.delete_doc = DeleteDoc(client)
 
-    def delete_document(self, person, filter_del):
+    def delete_timeoff(self, person, couse):
         """
         Удаление документа
-        :param filter_del: фильтр для удаления
+        :param couse: причина отгула
         :param person: Поиск по имени
         """
 
-        assert filter_del, 'Параметр timeoff_mask не может быть пустым'
+        assert couse, 'Параметр couse не может быть пустым'
         response = self.timeoff_api.list(person).result
         for i in response:
-            if filter_del in i['NoteText']:
+            if couse in i['NoteText']:
                 self.delete_doc.delete_doc(i['DocID'])
