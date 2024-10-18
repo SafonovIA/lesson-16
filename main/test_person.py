@@ -1,5 +1,5 @@
 from atf import *
-from api.wrappers.personal_profile_api_wrapper import ProfileApiWrapper
+from lesson_16.main.api.wrappers.personal_profile_api_wrapper import ProfileApiWrapper
 
 
 class Test(TestCase):
