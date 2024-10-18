@@ -1,6 +1,6 @@
 from atf.api.base_api_ui import BaseApiUI
 from api.clients.wdt import WDT
-from api.clients.documents.delete_doc import DeleteDoc
+from api.clients.documents.delete_doc import Document
 
 
 class TimeoffApiWrapper(BaseApiUI):
@@ -9,7 +9,7 @@ class TimeoffApiWrapper(BaseApiUI):
     def __init__(self, client):
         super().__init__(client)
         self.timeoff_api = WDT(client)
-        self.delete_doc = DeleteDoc(client)
+        self.delete_doc = Document(client)
 
     def delete_timeoff(self, person, couse):
         """

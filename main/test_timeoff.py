@@ -21,15 +21,15 @@ class Test(TestCaseUI):
         cls.wdt = TimeoffApiWrapper(cls.client)
         AuthPage(cls.driver).auth()
         cls.tomorrow = datetime.strftime(datetime.today() + timedelta(days=1), '%d.%m.%y')
-        cls.wdt.delete_document(cls.data_timeoff["Сотрудник"], cls.data_timeoff['Причина'])
+        cls.wdt.delete_timeoff(cls.data_timeoff["Сотрудник"], cls.data_timeoff['Причина'])
 
     def setUp(self):
+        self.wdt.delete_document(self.data_timeoff.get("Сотрудник", self.data_timeoff.get("Сотрудник_автозаполнение")), self.data_timeoff['Причина'].split()[0])
         self.browser.open('https://fix-online.sbis.ru/page/work-schedule-documents')
         self.timeoff_page = TimeOff(self.driver)
         self.timeoff_card = self.timeoff_page.create_document('Отгул', 'Отгул')
 
     def tearDown(self):
-        self.wdt.delete_document(self.data_timeoff.get("Сотрудник", self.data_timeoff.get("Сотрудник_автозаполнение")), self.data_timeoff['Причина'].split()[0])
         self.browser.close_windows_and_alert()
 
     def test_01_create_timeoff(self):

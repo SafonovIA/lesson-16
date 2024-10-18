@@ -1,43 +1,46 @@
 from atf.api.base_api_ui import BaseApiUI
-from api.clients.person_profile import PersonalInfo
+from main.api.clients.Staff import Staff
+from main.api.clients.Person import Person
 
 
 class ProfileApiWrapper(BaseApiUI):
-    """PersonProfile.PersonalInfo"""
+    """Проверка персональных данных"""
 
-    def __init__(self, client):
-        super().__init__(client)
-        self.person_api = PersonalInfo(client)
+    def get_data(self, name):
+        """
+        Получение данных сотрудника
+        :param name: Имя сотрудника
+        """
+        self.staff = Staff(self.client)
+        self.person = Person(self.client)
 
-    @property
-    def get_items(self):
-        """Получение персональных данных"""
+        self.public_data = self.staff.wasaby_list(name)
+        person_id = self.public_data[1]['Employee']['PrivatePerson']
+        self.personal_data = self.person.read_card(person_id)
 
-        return self.person_api.personal_info().result
+
 
     def chech_items(self, **kwargs):
-        """Проверка персональных данных"""
+        """Проверка персональных данных
+        :param kwargs: эталонные параметры
+        """
 
         if "position" in kwargs.keys():
-            assert self.get_items['Workplaces'][0]['Post'] == kwargs['position']
+            assert self.personal_data['Header']['WorkData']['Position'] == kwargs['position']
 
         if "birthday" in kwargs.keys():
-            assert self.get_items['PrivatePersonData']['BirthDate'] == kwargs['birthday']
+            assert self.personal_data['Header']['PrivatePersonData']['BirthDate'] == kwargs['birthday']
 
         if "date_begin" in kwargs.keys():
-            assert self.get_items['WorkExperiences']["Verified"][0]["DateBegin"] == kwargs['date_begin']
-
-        if "phone_num" in kwargs.keys():
-            for contact in self.get_items['Contacts']:
-                if "mobile_phone" in contact.values():
-                    assert contact['Value'] == kwargs['phone_num']
-
-        if "email" in kwargs.keys():
-            for contact in self.get_items['Contacts']:
-                if "email" in contact.values():
-                    assert contact['Value'] == kwargs['email']
+            assert self.personal_data['Header']['WorkData']['ManagementWorkData']['HireDate'] == kwargs['date_begin']
 
         if "user_id" in kwargs.keys():
-            assert self.get_items['Person'] == kwargs['user_id']
+            assert self.personal_data['Ids']['Person'] == kwargs['user_id']
+
+        if "phone_num" in kwargs.keys():
+            assert self.public_data[1]['Employee']['Contacts']['MobilePhone'][0]['Value'] == kwargs['phone_num']
+
+        if "email" in kwargs.keys():
+            assert self.public_data[1]['Employee']['Contacts']['Email'][0]['Value'] == kwargs['email']
 
 

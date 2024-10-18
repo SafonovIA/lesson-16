@@ -1,9 +1,9 @@
 from atf import *
-from lesson_16.main.api.wrappers.profile_api_wrapper import ProfileApiWrapper
+from main.api.wrappers.profile_api_wrapper import ProfileApiWrapper
 
 
 class Test(TestCase):
-    """Тест персчональных данных"""
+    """Тест персональных данных"""
 
     @classmethod
     def setUpClass(cls):
@@ -19,7 +19,8 @@ class Test(TestCase):
             "birthday": None,
             "date_begin": "2019-01-01",
             "email": 'new@mail.ru',
-            "phone_num": '89898763457',
+            "phone_num": '+7 (989) 876-34-57',
             "user_id": "7d68445b-1720-44d5-82f1-258b03934726"
         }
+        self.profile_api.get_data('Регламентные События')
         self.profile_api.chech_items(**e_data)

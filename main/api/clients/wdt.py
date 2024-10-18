@@ -13,19 +13,9 @@ class WDT(BaseApiUI):
         """
 
         params = generate_record_list(
-            flServerRendering=False,
-            iterative_list=True,
-            new_navigation=True,
-            translit_search=False,
-            УчитыватьИерархиюНО=True,
-            ФильтрДатаП=(str(datetime.today().date() + timedelta(days=30)), 'Дата'),
-            ФильтрДатаПериод='Период',
-            ФильтрДатаС=(str(datetime.today().date()), 'Дата'),
-            ФильтрДокументНашаОрганизация='-2',
-            ФильтрМоиДокументы='Все',
-            ФильтрПодтипДокумента=(None, 'Строка'),
-            ФильтрПоиска='search',
-            ФильтрСостояние='-1'
+            ФильтрДатаП=(None, 'Строка'),
+            ФильтрДатаС=(None, 'Строка'),
+            ФильтрПоиска=search,
         )
 
         return self.client.call_rrecordset(method='WTD.List', **params)

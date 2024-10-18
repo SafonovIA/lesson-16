@@ -1,6 +1,6 @@
 from atf.api.base_api_ui import BaseApiUI
 from api.clients.work_plan_list import WorkPlanList
-from api.clients.documents.delete_doc import DeleteDoc
+from api.clients.documents.delete_doc import Document
 
 
 class PlanApiWrapper(BaseApiUI):
@@ -9,7 +9,7 @@ class PlanApiWrapper(BaseApiUI):
     def __init__(self, client):
         super().__init__(client)
         self.plan_api = WorkPlanList(client)
-        self.delete_doc = DeleteDoc(client)
+        self.delete_doc = Document(client)
 
     def delete_document(self, person, couse):
         """Удаление документа
